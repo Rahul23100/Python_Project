@@ -1,3 +1,3 @@
-hi hello this is exp3:wq
+hi hello this is exp3
 
 This is my git exp3
