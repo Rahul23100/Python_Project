@@ -25,7 +25,7 @@ def like_post(post_title):
             break
 
 # App title
-st.title("OJUS Community")
+st.title("Community Engagement Platform")
 
 # Sidebar for category selection
 st.sidebar.header("Categories")
@@ -59,7 +59,7 @@ if st.button("Add Post"):
 st.header("Recent Posts")
 filter_tags = st.sidebar.text_input("Filter by tags (comma-separated)")
 
-for post in st.session_state.posts:
+for index, post in enumerate(st.session_state.posts):
     if filter_tags:
         filter_list = [tag.strip() for tag in filter_tags.split(",")]
         if not any(tag in post["tags"] for tag in filter_list):
@@ -68,20 +68,20 @@ for post in st.session_state.posts:
     st.subheader(post["title"])
     st.image(post["image"], use_column_width=True)
 
-    # Like feature
-    if st.button(f"Like {post['title']}"):
+    # Like feature with unique key
+    if st.button(f"Like {post['title']}", key=f"like_button_{index}"):
         like_post(post["title"])
         st.success(f"You liked '{post['title']}'!")
 
     # Display likes
     st.write(f"Likes: {post['likes']}")
 
-    # Comment section
-    comment = st.text_input("Leave a comment:", key=post["title"])
-    if st.button("Submit Comment", key=f"comment_{post['title']}"):
+    # Comment section with unique key
+    comment = st.text_input("Leave a comment:", key=f"comment_input_{index}")
+    if st.button("Submit Comment", key=f"comment_button_{index}"):
         if comment:
             add_comment(post["title"], comment)
-            st.success("OJUs  Community")
+            st.success("Comment added successfully!")
 
     # Display comments
     if post["title"] in st.session_state.comments:
